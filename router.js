@@ -5,6 +5,8 @@ const { adminLoginController } = require("./controller/adminController")
 const { userReportController } = require("./controller/reportController")
 const jwtMiddleware = require("./middlewares/jwtMiddleware")
 const multerConfig = require("./middlewares/imageMulterMiddleware")
+const { testAIController } = require("./controller/testAIController")
+
 
 const router = express.Router()
 
@@ -25,5 +27,8 @@ router.post("/org-login", orgLoginController)
 
 // user report submit
 router.post("/user-report", jwtMiddleware, multerConfig.array("uploadImages", 3), userReportController)
+
+// ai analysis report
+router.get("/test-result", testAIController  )
 
 module.exports = router

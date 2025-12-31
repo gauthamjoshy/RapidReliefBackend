@@ -25,10 +25,10 @@ router.post("/user-login", userLoginController)
 // organization login
 router.post("/org-login", orgLoginController)
 
-// user report submit
+// user report submit(raw report)
 router.post("/user-report", jwtMiddleware, multerConfig.array("uploadImages", 3), userReportController)
 
-// ai analysis report
-router.get("/test-result", testAIController  )
+// ai analysis report()
+router.post("/test-result", jwtMiddleware, multerConfig.array("uploadImages", 3), testAIController  )
 
 module.exports = router

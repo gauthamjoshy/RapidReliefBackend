@@ -1,4 +1,7 @@
+const aireports = require("../model/aiReportModel");
 const userReports = require("../model/userReportModel");
+const { analyzeReport } = require("../service/geminiService");
+const extractJson = require("../utils/parseAIJson");
 
 exports.userReportController = async (req, res) => {
     console.log(`Inside userReportController`);
@@ -13,9 +16,17 @@ exports.userReportController = async (req, res) => {
 
     // 
     var images = []
-    req.files.map((item)=>images.push(item.filename))
+    req.files.map((item) => images.push(item.filename))
     console.log(images);
     // 
+
+    const BASE_URL = `${req.protocol}://${req.get("host")}`;
+
+    const imageUrls = req.files
+        ? req.files.map(file => `${BASE_URL}/uploads/${file.filename}`)
+        : [];
+
+
 
     // const images = req.files
     // // console.log(images);
@@ -34,12 +45,67 @@ exports.userReportController = async (req, res) => {
                 description,
                 location,
                 userMail,
-                images
+                images: imageUrls
             })
             await newReport.save()
+            // res.status(200).json(newReport)
+
+            // triggering ai analysis
+            setImmediate(async () => {
+                try {
+                    const AIText = await analyzeReport({
+                        name,
+                        pNum,
+                        address,
+                        description,
+                        location,
+                        userMail,
+                        images: imageUrls
+
+                    },
+                        req.files
+                    )
+                    const AIResult = extractJson(AIText)
+                    await aireports.create({
+                        reportId: newReport._id,
+                        name,
+                        pNum,
+                        address,
+                        description,
+                        location,
+                        userMail,
+                        images: imageUrls,
+                        ...AIResult
+                    })
+                    console.log(`AI report saved successfully`);
+
+                } catch (aiError) {
+                    console.log(`AI report saving failed due to ${aiError}`);
+
+                }
+            })
             res.status(200).json(newReport)
         }
     } catch (error) {
+        res.status(500).json(error)
+    }
+
+}
+
+
+// approve report
+exports.approveReportController = async (req, res) => {
+    console.log(`Inside approveReportController`);
+
+    const {id} = req.params
+
+    const approveReportData = {status : "approved"}
+
+    try{
+        const approveReport = await aireports.findByIdAndUpdate({_id: id}, approveReportData, {new: true})
+        res.status(200).json(approveReport)
+
+    }catch(error){
         res.status(500).json(error)
     }
 

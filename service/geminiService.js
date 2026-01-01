@@ -43,7 +43,9 @@ Name: ${report.name}
 Location: ${report.location}
 Phone: ${report.pNum}
 Address: ${report.address}
-User Description: ${report.description}
+UserDescription: ${report.description}
+userMail:${report.userMail}
+images:${report.images}
 
 
 IMAGE INSTRUCTIONS:
@@ -63,6 +65,7 @@ example of an expected report
         "phoneNumber": "9568785458",
         "address": "Nedumkandam P.O, Idukki",
         "userDescription": "A major landslide at Nedumkandam, Idukki. Roads are fully blocked, all power sources are cut off. Many people trapped. We need urgent help.",
+        "userMail": "alan@gmail.com",
         "keywords": [
           "Landslide",
           "Road Blocked",
@@ -70,13 +73,14 @@ example of an expected report
           "People Trapped",
           "Urgent Help"
         ],
+        "images":["http://localhost:3000/uploads/image.png" ],
         "aiAnalysisAndRecommendations": "This incident is classified as high severity. Immediate intervention is required. Dispatch emergency response teams, clear road obstacles, restore power, and notify local authorities. Prioritize rescue operations for trapped individuals."
     } 
 `
 
 
     const response = await genAI.models.generateContent({
-        model: "gemini-2.5-flash-lite",
+        model: "gemini-2.5-flash",
         contents: [{role: "user",
             parts: [{text: prompt}, ...imageParts]
         }]

@@ -1,8 +1,8 @@
 const express = require("express")
-const {userRegisterController, userLoginController } = require("./controller/userController")
+const {userRegisterController, userLoginController, getEachUserReportController } = require("./controller/userController")
 const { orgRegisterController, orgLoginController } = require("./controller/orgController")
-const { adminLoginController } = require("./controller/adminController")
-const { userReportController } = require("./controller/reportController")
+const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController } = require("./controller/adminController")
+const { userReportController, approveReportController } = require("./controller/reportController")
 const jwtMiddleware = require("./middlewares/jwtMiddleware")
 const multerConfig = require("./middlewares/imageMulterMiddleware")
 const { testAIController } = require("./controller/testAIController")
@@ -30,5 +30,20 @@ router.post("/user-report", jwtMiddleware, multerConfig.array("uploadImages", 3)
 
 // ai analysis report()
 router.post("/test-result", jwtMiddleware, multerConfig.array("uploadImages", 3), testAIController  )
+
+// get all ai reports admin
+router.get("/get-all-reports-admin", getAllAIReports)
+
+// get all users
+router.get("/get-all-users", getAllUserController)
+
+// get all users
+router.get("/get-all-org", getAllOrgController)
+
+// get each user report
+router.get("/get-eachUser-report",jwtMiddleware, getEachUserReportController)
+
+// update report
+router.put("/approve-report/:id", approveReportController)
 
 module.exports = router

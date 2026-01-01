@@ -6,7 +6,7 @@ const userReportSchema = new mongoose.Schema({
         required: true
     },
     pNum: {
-        type: Number,
+        type: String,
         required: true
     },
     address: {
@@ -14,10 +14,6 @@ const userReportSchema = new mongoose.Schema({
         required: true
     },
     description: {
-        type: String,
-        required: true
-    },
-    location: {
         type: String,
         required: true
     },

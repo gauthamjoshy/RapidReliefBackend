@@ -10,6 +10,8 @@ const cors = require("cors")
 // import router
 const router = require("./router")
 
+const path = require("path")
+
 // import connection
 require("./db/connection")
 
@@ -24,6 +26,11 @@ disasterManagementServer.use(express.json())
 
 // tell server to use router
 disasterManagementServer.use(router)
+
+disasterManagementServer.use(
+  "/uploads",
+  express.static(path.join(__dirname, "imgUploads"))
+)
 
 // create port
 const PORT = 3000

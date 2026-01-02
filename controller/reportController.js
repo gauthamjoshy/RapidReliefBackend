@@ -110,3 +110,22 @@ exports.approveReportController = async (req, res) => {
     }
 
 }
+
+// assign organization
+exports.assignOrgController = async (req, res)=>{
+    console.log(`Inside assignOrgController`);
+
+    const {id} = req.params
+    const {username} = req.body
+
+    const assignOrgData = {assignedOrganization: username }
+
+    try{
+        const assignedOrg = await aireports.findByIdAndUpdate({_id: id}, assignOrgData, {new: true})
+        res.status(200).json(assignedOrg)
+
+    }catch(error){
+        res.status(500).json(error)
+    }
+    
+}

@@ -28,6 +28,7 @@ exports.analyzeReport = async (report, images = []) => {
 
 {
   "status": "pending",
+  "assignedOrganization": "",
   "incidentOverview": "",
   "severity": "Low | Medium | High",
   "location": "",
@@ -57,6 +58,7 @@ IMAGE INSTRUCTIONS:
 example of an expected report
     {
         "status": "pending",
+        "assignedOrganization": "",
         "incidentOverview": "Major landslide at Nedumkandam, Idukki. Roads completely blocked, power cut off, and people trapped. Urgent help required.",
         "severity": "High",
         "location": "Nedumkandam, Idukki, Kerala",

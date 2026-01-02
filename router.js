@@ -2,7 +2,7 @@ const express = require("express")
 const {userRegisterController, userLoginController, getEachUserReportController } = require("./controller/userController")
 const { orgRegisterController, orgLoginController } = require("./controller/orgController")
 const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController } = require("./controller/adminController")
-const { userReportController, approveReportController } = require("./controller/reportController")
+const { userReportController, approveReportController, assignOrgController } = require("./controller/reportController")
 const jwtMiddleware = require("./middlewares/jwtMiddleware")
 const multerConfig = require("./middlewares/imageMulterMiddleware")
 const { testAIController } = require("./controller/testAIController")
@@ -45,5 +45,8 @@ router.get("/get-eachUser-report",jwtMiddleware, getEachUserReportController)
 
 // update report
 router.put("/approve-report/:id", approveReportController)
+
+// assign org
+router.put("/assign-org/:id", assignOrgController)
 
 module.exports = router

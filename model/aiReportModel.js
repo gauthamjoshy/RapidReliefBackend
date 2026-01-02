@@ -30,6 +30,10 @@ const AIReportSchema = new mongoose.Schema({
         type: String,
         default: "pending"
     },
+    assignedOrganization: {
+        type: String,
+        default: ""
+    },
     incidentOverview: {
         type: String,
         required: true

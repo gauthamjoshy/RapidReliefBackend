@@ -1,11 +1,12 @@
 const express = require("express")
 const {userRegisterController, userLoginController, getEachUserReportController } = require("./controller/userController")
-const { orgRegisterController, orgLoginController } = require("./controller/orgController")
+const { orgRegisterController, orgLoginController, getAssignedReportController } = require("./controller/orgController")
 const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController } = require("./controller/adminController")
 const { userReportController, approveReportController, assignOrgController } = require("./controller/reportController")
-const jwtMiddleware = require("./middlewares/jwtMiddleware")
 const multerConfig = require("./middlewares/imageMulterMiddleware")
 const { testAIController } = require("./controller/testAIController")
+const userJwtMiddleware = require("./middlewares/userJwtMiddleware")
+const OrgJwtMiddleware = require("./middlewares/OrgJwtMiddleware")
 
 
 const router = express.Router()
@@ -26,10 +27,10 @@ router.post("/user-login", userLoginController)
 router.post("/org-login", orgLoginController)
 
 // user report submit(raw report)
-router.post("/user-report", jwtMiddleware, multerConfig.array("uploadImages", 3), userReportController)
+router.post("/user-report", userJwtMiddleware, multerConfig.array("uploadImages", 3), userReportController)
 
 // ai analysis report()
-router.post("/test-result", jwtMiddleware, multerConfig.array("uploadImages", 3), testAIController  )
+router.post("/test-result", userJwtMiddleware, multerConfig.array("uploadImages", 3), testAIController  )
 
 // get all ai reports admin
 router.get("/get-all-reports-admin", getAllAIReports)
@@ -41,12 +42,15 @@ router.get("/get-all-users", getAllUserController)
 router.get("/get-all-org", getAllOrgController)
 
 // get each user report
-router.get("/get-eachUser-report",jwtMiddleware, getEachUserReportController)
+router.get("/get-eachUser-report",userJwtMiddleware, getEachUserReportController)
 
 // update report
 router.put("/approve-report/:id", approveReportController)
 
 // assign org
 router.put("/assign-org/:id", assignOrgController)
+
+// get assigned report
+router.get("/get-assigned-report", OrgJwtMiddleware, getAssignedReportController)
 
 module.exports = router

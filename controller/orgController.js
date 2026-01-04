@@ -1,3 +1,4 @@
+const aireports = require("../model/aiReportModel");
 const organizations = require("../model/orgModel");
 const jwt = require("jsonwebtoken")
 
@@ -52,5 +53,20 @@ exports.orgLoginController = async (req, res)=>{
 
     }catch (error){
         req.status(500).json(error)
+    }
+}
+
+// get assigned report
+exports.getAssignedReportController = async (req, res)=>{
+    console.log(`Inside getAssignedReportController`);
+
+    const username = req.payload
+    
+    try{
+        const assignedReport = await aireports.find({status: "approved", assignedOrganization: username})
+        res.status(200).json(assignedReport)
+
+    }catch(error){
+        res.status(500).json(error)
     }
 }

@@ -1,7 +1,9 @@
+
+// 
 const jwt = require("jsonwebtoken")
 
-const jwtMiddleware = (req, res, next) =>{
-    console.log(`Inside jwt middleware`);
+const userJwtMiddleware = (req, res, next) =>{
+    console.log(`Inside userJwtMiddleware`);
 
     const token = req.headers.authorization.split(" ")[1]
     console.log(token);
@@ -19,4 +21,4 @@ const jwtMiddleware = (req, res, next) =>{
     
 }
 
-module.exports = jwtMiddleware
+module.exports = userJwtMiddleware

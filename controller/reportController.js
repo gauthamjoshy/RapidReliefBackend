@@ -1,4 +1,5 @@
 const aireports = require("../model/aiReportModel");
+const organizations = require("../model/orgModel");
 const userReports = require("../model/userReportModel");
 const { analyzeReport } = require("../service/geminiService");
 const extractJson = require("../utils/parseAIJson");
@@ -122,6 +123,9 @@ exports.assignOrgController = async (req, res)=>{
 
     try{
         const assignedOrg = await aireports.findByIdAndUpdate({_id: id}, assignOrgData, {new: true})
+        // 
+        await organizations.findOneAndUpdate({ username }, { status: "Busy" });
+        // 
         res.status(200).json(assignedOrg)
 
     }catch(error){

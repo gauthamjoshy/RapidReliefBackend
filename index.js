@@ -27,10 +27,7 @@ disasterManagementServer.use(express.json())
 // tell server to use router
 disasterManagementServer.use(router)
 
-disasterManagementServer.use(
-  "/uploads",
-  express.static(path.join(__dirname, "imgUploads"))
-)
+disasterManagementServer.use("/uploads", express.static(path.join(__dirname, "imgUploads")))
 
 // create port
 const PORT = 3000

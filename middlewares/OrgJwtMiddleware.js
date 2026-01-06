@@ -9,7 +9,11 @@ const OrgJwtMiddleware = (req, res, next) =>{
     try{
         const jwtResponse = jwt.verify(token, process.env.JWTSecreteKey)
         console.log(jwtResponse);
-        req.payload = jwtResponse.orgMail
+        // req.payload = jwtResponse.orgMail
+        req.payload = {
+            orgMail: jwtResponse.orgMail,
+            orgName: jwtResponse.orgName
+        }
         console.log(req.payload);
         
         next()

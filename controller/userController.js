@@ -61,7 +61,7 @@ exports.getEachUserReportController = async (req, res) => {
     console.log(userMail);
 
     try{
-        const eachUserReport = await aireports.find({userMail:userMail})
+        const eachUserReport = await aireports.find({userMail:userMail}).sort({updatedAt: -1});
         if(eachUserReport.length > 0){
             res.status(200).json(eachUserReport)
         }else{
@@ -72,4 +72,21 @@ exports.getEachUserReportController = async (req, res) => {
         res.status(500).json(error)
     }
 
+}
+
+
+// get pending user report
+exports.getPendingReportController = async (req, res)=>{
+    console.log(`Inside getPendingReportController`);
+
+    const userMail = req.payload
+    console.log(userMail);
+    
+    try{
+        const pendingUserReport = await aireports.find({userMail:userMail, status: "pending"})
+        res.status(200).json(pendingUserReport)
+
+    }catch(error){
+        res.status(500).json(error)
+    }
 }

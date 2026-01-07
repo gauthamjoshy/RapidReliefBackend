@@ -151,4 +151,13 @@ exports.reportOrgIssueController = async (req, res)=>{
     const {id} = req.params
     const {orgIssue} = req.body
     
+    try{
+        const orgProblem = await aireports.findByIdAndUpdate({_id: id}, {orgIssue}, {new: true})
+        res.status(200).json(orgProblem)
+
+    }catch(error){
+        res.status(500).json(error)
+        console.log(error);
+        
+    }
 }

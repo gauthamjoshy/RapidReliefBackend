@@ -90,3 +90,22 @@ exports.getPendingReportController = async (req, res)=>{
         res.status(500).json(error)
     }
 }
+
+
+// org report issue
+exports.reportUserIssueController = async (req, res)=>{
+    console.log(`Inside reportUserIssueController`);
+
+    const {id} = req.params
+    const {userIssue} = req.body
+    
+    try{
+        const userProblem = await aireports.findByIdAndUpdate({_id: id}, {userIssue}, {new: true})
+        res.status(200).json(userProblem)
+
+    }catch(error){
+        res.status(500).json(error)
+        console.log(error);
+        
+    }
+}

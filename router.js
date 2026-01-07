@@ -1,6 +1,6 @@
 const express = require("express")
-const {userRegisterController, userLoginController, getEachUserReportController, getPendingReportController } = require("./controller/userController")
-const { orgRegisterController, orgLoginController, getAssignedReportController, acceptReportController, getAllReportOrgController, completeReportController, updateOrgProfileController } = require("./controller/orgController")
+const {userRegisterController, userLoginController, getEachUserReportController, getPendingReportController, reportUserIssueController } = require("./controller/userController")
+const { orgRegisterController, orgLoginController, getAssignedReportController, acceptReportController, getAllReportOrgController, completeReportController, updateOrgProfileController, reportOrgIssueController } = require("./controller/orgController")
 const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController, getRejectedReportAdminController, deleteUserController, deleteOrgController } = require("./controller/adminController")
 const { userReportController, approveReportController, assignOrgController, rejectReportController } = require("./controller/reportController")
 const multerConfig = require("./middlewares/imageMulterMiddleware")
@@ -79,5 +79,14 @@ router.delete("/delete-user/:id", deleteUserController)
 
 // delete user
 router.delete("/delete-org/:id", deleteOrgController)
+
+// report org issue
+router.put("/report-org-issue/:id", OrgJwtMiddleware, reportOrgIssueController)
+
+// report user issue
+router.put("/report-user-issue/:id", userJwtMiddleware, reportUserIssueController)
+
+
+
 
 module.exports = router

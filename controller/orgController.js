@@ -96,7 +96,7 @@ exports.getAllReportOrgController = async (req, res)=>{
     const {orgName} = req.payload
     
     try{
-        const assignedReport = await aireports.find({assignedOrganization: orgName})
+        const assignedReport = await aireports.find({assignedOrganization: orgName}).sort({updatedAt: -1});
         res.status(200).json(assignedReport)
 
     }catch(error){
@@ -141,5 +141,14 @@ exports.updateOrgProfileController = async (req, res)=>{
     }catch(error){
         res.status(500).json(error)
     }
+    
+}
+
+// org report issue
+exports.reportOrgIssueController = async (req, res)=>{
+    console.log(`Inside reportOrgIssueController`);
+
+    const {id} = req.params
+    const {orgIssue} = req.body
     
 }

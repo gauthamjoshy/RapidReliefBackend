@@ -36,10 +36,11 @@ const orgSchema = new mongoose.Schema({
     role: {
         type: String,
         default: "organization"
-    },status: {
+    }, status: {
         type: String,
         default: ""
     }
+
 
 })
 

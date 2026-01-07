@@ -1,8 +1,8 @@
 const express = require("express")
 const {userRegisterController, userLoginController, getEachUserReportController, getPendingReportController } = require("./controller/userController")
 const { orgRegisterController, orgLoginController, getAssignedReportController, acceptReportController, getAllReportOrgController, completeReportController, updateOrgProfileController } = require("./controller/orgController")
-const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController } = require("./controller/adminController")
-const { userReportController, approveReportController, assignOrgController } = require("./controller/reportController")
+const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController, getRejectedReportAdminController, deleteUserController, deleteOrgController } = require("./controller/adminController")
+const { userReportController, approveReportController, assignOrgController, rejectReportController } = require("./controller/reportController")
 const multerConfig = require("./middlewares/imageMulterMiddleware")
 const { testAIController } = require("./controller/testAIController")
 const userJwtMiddleware = require("./middlewares/userJwtMiddleware")
@@ -65,7 +65,19 @@ router.get("/get-all-assigned-reports", OrgJwtMiddleware, getAllReportOrgControl
 // complete report
 router.put("/complete-report/:id", OrgJwtMiddleware, completeReportController)
 
+// update org profile
 router.put("/update-org-profile", OrgJwtMiddleware, updateOrgProfileController)
 
+// reject report
+router.put("/reject-report/:id", rejectReportController)
+
+// get rejected reports at admin
+router.get("/get-rejected-reports", getRejectedReportAdminController)
+
+// delete user
+router.delete("/delete-user/:id", deleteUserController)
+
+// delete user
+router.delete("/delete-org/:id", deleteOrgController)
 
 module.exports = router

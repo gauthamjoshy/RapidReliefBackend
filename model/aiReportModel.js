@@ -6,9 +6,9 @@ const AIReportSchema = new mongoose.Schema({
         ref: "userreports",
         required: true
     },
-    location:{
-        type:String,
-        required:true
+    location: {
+        type: String,
+        required: true
     },
     name: {
         type: String,
@@ -63,8 +63,28 @@ const AIReportSchema = new mongoose.Schema({
         required: true
     },
     images: {
-      type: [String],
-      required: true
+        type: [String],
+        required: true
+    },
+    rejectionReason: {
+        type: String,
+        default: null
+    },
+    orgIssue: {
+        type: String,
+        default: null
+    },
+    userIssue: {
+        type: String,
+        default: null
+    },
+    adminToOrgMessage:  {
+        type: String,
+        default: null
+    },
+    adminToUserMessage:  {
+        type: String,
+        default: null
     },
 
 },
@@ -73,4 +93,4 @@ const AIReportSchema = new mongoose.Schema({
 )
 
 const aireports = mongoose.model("aireports", AIReportSchema)
-module.exports= aireports
+module.exports = aireports

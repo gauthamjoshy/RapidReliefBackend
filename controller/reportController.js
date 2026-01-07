@@ -47,6 +47,7 @@ exports.userReportController = async (req, res) => {
                 location,
                 userMail,
                 images: imageUrls
+                
             })
             await newReport.save()
             // res.status(200).json(newReport)
@@ -62,6 +63,7 @@ exports.userReportController = async (req, res) => {
                         location,
                         userMail,
                         images: imageUrls
+                        
 
                     },
                         req.files
@@ -130,6 +132,25 @@ exports.assignOrgController = async (req, res)=>{
 
     }catch(error){
         res.status(500).json(error)
+    }
+    
+}
+
+// reject a report
+exports.rejectReportController = async (req, res)=>{
+    console.log(`Inside rejectReportController`);
+
+    const {id} = req.params
+    const {rejectionReason} = req.body
+
+    try{
+        const rejectedReport = await aireports.findByIdAndUpdate({_id: id}, {status: "rejected", rejectionReason: rejectionReason}, {new: true})
+        res.status(200).json(rejectedReport)
+
+    }catch(error){
+        res.status(500).json(error)
+        console.log(error);
+        
     }
     
 }

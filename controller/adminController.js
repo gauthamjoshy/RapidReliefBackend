@@ -121,3 +121,39 @@ exports.deleteOrgController = async (req, res)=>{
   }
   
 }
+
+// reply to user
+exports.replyToUserController = async (req, res)=>{
+    console.log(`Inside replyToUserController`);
+
+    const {id} = req.params
+    const {adminToUserMessage} = req.body
+    
+    try{
+        const userReply = await aireports.findByIdAndUpdate({_id: id}, {adminToUserMessage}, {new: true})
+        res.status(200).json(userReply)
+
+    }catch(error){
+        res.status(500).json(error)
+        console.log(error);
+        
+    }
+}
+
+// reply to org
+exports.replyToOrgController = async (req, res)=>{
+    console.log(`Inside replyToOrgController`);
+
+    const {id} = req.params
+    const {adminToOrgMessage} = req.body
+    
+    try{
+        const orgReply = await aireports.findByIdAndUpdate({_id: id}, {adminToOrgMessage}, {new: true})
+        res.status(200).json(orgReply)
+
+    }catch(error){
+        res.status(500).json(error)
+        console.log(error);
+        
+    }
+}

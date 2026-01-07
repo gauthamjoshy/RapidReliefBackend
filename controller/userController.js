@@ -60,15 +60,15 @@ exports.getEachUserReportController = async (req, res) => {
     const userMail = req.payload
     console.log(userMail);
 
-    try{
-        const eachUserReport = await aireports.find({userMail:userMail}).sort({updatedAt: -1});
-        if(eachUserReport.length > 0){
+    try {
+        const eachUserReport = await aireports.find({ userMail: userMail }).sort({ updatedAt: -1 });
+        if (eachUserReport.length > 0) {
             res.status(200).json(eachUserReport)
-        }else{
+        } else {
             res.status(404).json(`No reports submitted yet`)
         }
 
-    }catch(error) {
+    } catch (error) {
         res.status(500).json(error)
     }
 
@@ -76,36 +76,41 @@ exports.getEachUserReportController = async (req, res) => {
 
 
 // get pending user report
-exports.getPendingReportController = async (req, res)=>{
+exports.getPendingReportController = async (req, res) => {
     console.log(`Inside getPendingReportController`);
 
     const userMail = req.payload
     console.log(userMail);
-    
-    try{
-        const pendingUserReport = await aireports.find({userMail:userMail, status: "pending"})
-        res.status(200).json(pendingUserReport)
 
-    }catch(error){
+    try {
+        const pendingUserReport = await aireports.find({ userMail: userMail, status: "pending" })
+        if (pendingUserReport) {
+            res.status(200).json(pendingUserReport)
+        } else {
+            res.status(404).json(`No reports pending`)
+        }
+
+
+    } catch (error) {
         res.status(500).json(error)
     }
 }
 
 
 // org report issue
-exports.reportUserIssueController = async (req, res)=>{
+exports.reportUserIssueController = async (req, res) => {
     console.log(`Inside reportUserIssueController`);
 
-    const {id} = req.params
-    const {userIssue} = req.body
-    
-    try{
-        const userProblem = await aireports.findByIdAndUpdate({_id: id}, {userIssue}, {new: true})
+    const { id } = req.params
+    const { userIssue } = req.body
+
+    try {
+        const userProblem = await aireports.findByIdAndUpdate({ _id: id }, { userIssue }, { new: true })
         res.status(200).json(userProblem)
 
-    }catch(error){
+    } catch (error) {
         res.status(500).json(error)
         console.log(error);
-        
+
     }
 }

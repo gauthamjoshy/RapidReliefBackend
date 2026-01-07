@@ -1,7 +1,7 @@
 const express = require("express")
 const {userRegisterController, userLoginController, getEachUserReportController, getPendingReportController, reportUserIssueController } = require("./controller/userController")
 const { orgRegisterController, orgLoginController, getAssignedReportController, acceptReportController, getAllReportOrgController, completeReportController, updateOrgProfileController, reportOrgIssueController } = require("./controller/orgController")
-const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController, getRejectedReportAdminController, deleteUserController, deleteOrgController } = require("./controller/adminController")
+const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController, getRejectedReportAdminController, deleteUserController, deleteOrgController, replyToUserController, replyToOrgController } = require("./controller/adminController")
 const { userReportController, approveReportController, assignOrgController, rejectReportController } = require("./controller/reportController")
 const multerConfig = require("./middlewares/imageMulterMiddleware")
 const { testAIController } = require("./controller/testAIController")
@@ -85,6 +85,12 @@ router.put("/report-org-issue/:id", OrgJwtMiddleware, reportOrgIssueController)
 
 // report user issue
 router.put("/report-user-issue/:id", userJwtMiddleware, reportUserIssueController)
+
+// reply to user
+router.put("/reply-to-user/:id", replyToUserController)
+
+// reply to org
+router.put("/reply-to-org/:id", replyToOrgController)
 
 
 

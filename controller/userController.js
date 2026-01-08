@@ -53,6 +53,35 @@ exports.userLoginController = async (req, res) => {
     }
 }
 
+// google login controller
+exports.googleLoginController = async (req, res) => {
+    console.log(`Inside googleLoginController`);
+    const { username, email, password } = req.body
+    console.log(username, email, password);
+
+    try {
+        const existingUser = await users.findOne({ email })
+        if (existingUser) {
+
+            const token = jwt.sign({ userMail: existingUser.email }, process.env.JWTSecreteKey)
+            res.status(200).json({ existingUser, token })
+
+        } else {
+            const newUser = new users({
+                username,
+                email,
+                password
+            })
+            await newUser.save()
+            const token = jwt.sign({ userMail: newUser.email }, process.env.JWTSecreteKey)
+            res.status(200).json({existingUser: newUser, token})
+        }
+    } catch (error) {
+        res.status(500).json(error)
+    }
+}
+
+
 // get a report at user
 exports.getEachUserReportController = async (req, res) => {
     console.log(`Inside getEachUserReport`);
@@ -62,7 +91,7 @@ exports.getEachUserReportController = async (req, res) => {
 
     try {
         const eachUserReport = await aireports.find({ userMail: userMail }).sort({ updatedAt: -1 });
-        if (eachUserReport.length > 0) {
+        if (eachUserReport) {
             res.status(200).json(eachUserReport)
         } else {
             res.status(404).json(`No reports submitted yet`)

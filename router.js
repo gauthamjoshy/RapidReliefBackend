@@ -1,5 +1,5 @@
 const express = require("express")
-const {userRegisterController, userLoginController, getEachUserReportController, getPendingReportController, reportUserIssueController } = require("./controller/userController")
+const {userRegisterController, userLoginController, getEachUserReportController, getPendingReportController, reportUserIssueController, googleLoginController } = require("./controller/userController")
 const { orgRegisterController, orgLoginController, getAssignedReportController, acceptReportController, getAllReportOrgController, completeReportController, updateOrgProfileController, reportOrgIssueController } = require("./controller/orgController")
 const { adminLoginController, getAllAIReports, getAllUserController, getAllOrgController, getRejectedReportAdminController, deleteUserController, deleteOrgController, replyToUserController, replyToOrgController } = require("./controller/adminController")
 const { userReportController, approveReportController, assignOrgController, rejectReportController } = require("./controller/reportController")
@@ -22,6 +22,9 @@ router.post("/admin-login", adminLoginController)
 
 // user login
 router.post("/user-login", userLoginController)
+
+// user google login
+router.post("/user-google-login", googleLoginController)
 
 // organization login
 router.post("/org-login", orgLoginController)

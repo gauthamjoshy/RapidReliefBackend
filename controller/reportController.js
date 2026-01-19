@@ -21,11 +21,10 @@ exports.userReportController = async (req, res) => {
     console.log(images);
     // 
 
-    const BASE_URL = `${req.protocol}://${req.get("host")}`;
+    // const BASE_URL = `${req.protocol}://${req.get("host")}`;
+    const BASE_URL = `https://rapid-relief-backend.onrender.com`
 
-    const imageUrls = req.files
-        ? req.files.map(file => `${BASE_URL}/uploads/${file.filename}`)
-        : [];
+    const imageUrls = req.files? req.files.map(file => `${BASE_URL}/uploads/${file.filename}`): [];
 
 
 
@@ -69,6 +68,7 @@ exports.userReportController = async (req, res) => {
                         req.files
                     )
                     const AIResult = extractJson(AIText)
+
                     await aireports.create({
                         reportId: newReport._id,
                         name,
@@ -98,7 +98,7 @@ exports.userReportController = async (req, res) => {
 
 // approve report
 exports.approveReportController = async (req, res) => {
-    console.log(`Inside approveReportController`);
+    console.log(`Ixnside approveReportController`);
 
     const {id} = req.params
 

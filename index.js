@@ -18,7 +18,7 @@ require("./db/connection")
 // create server
 const disasterManagementServer = express()
 
-// tell server to use cors
+// tell server to use c ors
 disasterManagementServer.use(cors())
 
 // parse
